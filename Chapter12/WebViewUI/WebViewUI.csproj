@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  
+    <ApplicationIcon Condition="'$(IsWindows)'=='true'">icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+   
+<ItemGroup Condition="'$(IsOSX)'=='true'">
+  <None Update="icon.icns">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+
+<ItemGroup Condition="'$(IsLinux)'=='true'">
+  <None Update="icon.png">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+  
+  <PropertyGroup Condition="'$(IsWindows)'=='true'">
+    <DefineConstants>Windows</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsOSX)'=='true'">
+    <DefineConstants>OSX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsLinux)'=='true'">
+    <DefineConstants>Linux</DefineConstants>
+  </PropertyGroup>
+  
+  
+  <ItemGroup>
+    <None Remove="App\index.html" />
+    <None Remove="App\site.js" />
+    <None Remove="App\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="App\index.html">
+      <LogicalName>%(RelativeDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\site.js">
+      <LogicalName>%(RelativeDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App\styles.css">
+      <LogicalName>%(RelativeDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <PackageReference Include="Bildstein.SpiderEye.Core" Version="1.0.0-beta.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsLinux)'=='true'">
+    <PackageReference Include="Bildstein.SpiderEye.Linux" Version="1.0.0-beta.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsOSX)'=='true'">  
+    <PackageReference Include="Bildstein.SpiderEye.Mac" Version="1.0.0-beta.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IsWindows)'=='true'">  
+    <PackageReference Include="Bildstein.SpiderEye.Windows" Version="1.0.0-beta.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="icon.icns">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
